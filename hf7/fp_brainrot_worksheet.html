@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funkcionális Paradigma Brainrot Worksheet – Vol. 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Permanent+Marker&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #060a12;
+    --white:   #ede9e0;
+    --gold:    #FFD166;
+    --mint:    #06D6A0;
+    --coral:   #EF476F;
+    --sky:     #38B6FF;
+    --peach:   #FF9F5B;
+    --lav:     #B57BFF;
+    --sage:    #5EDB7A;
+    --aqua:    #00D4CC;
+    --rose:    #FF6FA3;
+    --teal:    #2EC4B6;
+    --lemon:   #F5E642;
+    --lilac:   #D4AAFF;
+    --slate:   #8AB4CC;
+    --red:     #FF4444;
+    --cream:   #FFE5B4;
+    --fern:    #82C45A;
+    --magenta: #FF3DCC;
+    --periwinkle: #7B8FFF;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+  }
+
+  .page { max-width: 980px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .header { text-align:center; margin-bottom:44px; }
+
+  .header-badge {
+    display:inline-block;
+    background: var(--gold);
+    color: #000;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:12px; letter-spacing:3px;
+    padding:4px 18px; margin-bottom:12px;
+  }
+
+  .header h1 {
+    font-family:'Bebas Neue',sans-serif;
+    font-size: clamp(44px,8.5vw,86px);
+    line-height:.88; letter-spacing:-1px;
+  }
+  .header h1 .l1 { color:var(--white); display:block; }
+  .header h1 .l2 { color:var(--gold); display:block; }
+  .header h1 .l3 { color:transparent; -webkit-text-stroke:2px var(--mint); display:block; }
+
+  .header-sub {
+    margin-top:14px;
+    font-family:'Space Mono',monospace;
+    font-size:12px; color:#4a5a6a; letter-spacing:1px;
+  }
+
+  .lambda-deco {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(60px,10vw,110px);
+    color:rgba(255,209,102,.07);
+    position:absolute; right:0; top:0;
+    pointer-events:none; line-height:1;
+  }
+
+  .header { position:relative; }
+
+  .stripe {
+    margin:28px 0; height:6px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--gold)    0   18px,
+      var(--mint)   18px 36px,
+      var(--coral)  36px 54px,
+      var(--lav)    54px 72px,
+      var(--aqua)   72px 90px,
+      var(--rose)   90px 108px
+    );
+  }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(390px,1fr));
+    gap:20px; margin-bottom:40px;
+  }
+
+  .card {
+    border:3px solid;
+    position:relative; overflow:hidden;
+    transition: transform .13s ease;
+  }
+  .card:hover { transform:translate(-3px,-3px); }
+  .card::after {
+    content:''; position:absolute;
+    top:5px; left:5px; right:-5px; bottom:-5px; z-index:-1;
+  }
+
+  /* colour themes */
+  .cg { border-color:var(--gold);      background:#141000; }
+  .cg::after { background:var(--gold); }
+
+  .cm { border-color:var(--mint);      background:#001a12; }
+  .cm::after { background:var(--mint); }
+
+  .cc { border-color:var(--coral);     background:#1a0008; }
+  .cc::after { background:var(--coral); }
+
+  .cs { border-color:var(--sky);       background:#001422; }
+  .cs::after { background:var(--sky); }
+
+  .cp { border-color:var(--peach);     background:#1a0d00; }
+  .cp::after { background:var(--peach); }
+
+  .cl { border-color:var(--lav);       background:#0e0020; }
+  .cl::after { background:var(--lav); }
+
+  .csa { border-color:var(--sage);     background:#041200; }
+  .csa::after { background:var(--sage); }
+
+  .ca { border-color:var(--aqua);      background:#001515; }
+  .ca::after { background:var(--aqua); }
+
+  .cr { border-color:var(--rose);      background:#1a0010; }
+  .cr::after { background:var(--rose); }
+
+  .ct { border-color:var(--teal);      background:#001714; }
+  .ct::after { background:var(--teal); }
+
+  .cle { border-color:var(--lemon);    background:#141200; }
+  .cle::after { background:var(--lemon); }
+
+  .cli { border-color:var(--lilac);    background:#100018; }
+  .cli::after { background:var(--lilac); }
+
+  .csl { border-color:var(--slate);    background:#080f14; }
+  .csl::after { background:var(--slate); }
+
+  .cre { border-color:var(--red);      background:#1a0000; }
+  .cre::after { background:var(--red); }
+
+  .ccr { border-color:var(--cream);    background:#14100a; }
+  .ccr::after { background:var(--cream); }
+
+  .cfe { border-color:var(--fern);     background:#071000; }
+  .cfe::after { background:var(--fern); }
+
+  .cma { border-color:var(--magenta);  background:#180010; }
+  .cma::after { background:var(--magenta); }
+
+  .cpe { border-color:var(--periwinkle); background:#080e28; }
+  .cpe::after { background:var(--periwinkle); }
+
+  .cgr { border-color:#888;            background:#0d0d0d; }
+  .cgr::after { background:#555; }
+
+  .cpur { border-color:#FF9E5E;        background:#1a0c00; }
+  .cpur::after { background:#FF9E5E; }
+
+  /* card internals */
+  .card-header {
+    padding:14px 17px 10px;
+    border-bottom:2px solid currentColor;
+    display:flex; align-items:center; gap:12px;
+  }
+  .cg .card-header   { color:var(--gold); }
+  .cm .card-header   { color:var(--mint); }
+  .cc .card-header   { color:var(--coral); }
+  .cs .card-header   { color:var(--sky); }
+  .cp .card-header   { color:var(--peach); }
+  .cl .card-header   { color:var(--lav); }
+  .csa .card-header  { color:var(--sage); }
+  .ca .card-header   { color:var(--aqua); }
+  .cr .card-header   { color:var(--rose); }
+  .ct .card-header   { color:var(--teal); }
+  .cle .card-header  { color:var(--lemon); }
+  .cli .card-header  { color:var(--lilac); }
+  .csl .card-header  { color:var(--slate); }
+  .cre .card-header  { color:var(--red); }
+  .ccr .card-header  { color:var(--cream); }
+  .cfe .card-header  { color:var(--fern); }
+  .cma .card-header  { color:var(--magenta); }
+  .cpe .card-header  { color:var(--periwinkle); }
+  .cgr .card-header  { color:#999; }
+  .cpur .card-header { color:#FF9E5E; }
+
+  .card-emoji { font-size:33px; line-height:1; flex-shrink:0; }
+  .card-name {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px; line-height:1;
+    color:var(--white); letter-spacing:.5px;
+  }
+  .card-concept {
+    font-family:'Space Mono',monospace;
+    font-size:10px; letter-spacing:1px; margin-top:2px; opacity:.82;
+  }
+
+  .card-body { padding:14px 17px; }
+
+  .card-desc {
+    font-size:13px; line-height:1.65; color:#bbb; margin-bottom:11px;
+  }
+  .card-desc strong { color:var(--white); }
+
+  .card-quote {
+    font-family:'Permanent Marker',cursive;
+    font-size:12.5px; line-height:1.5;
+    padding:8px 12px; border-left:3px solid currentColor;
+    background:rgba(255,255,255,.04);
+    color:var(--white); margin-bottom:11px;
+  }
+  .cg  .card-quote { border-color:var(--gold); }
+  .cm  .card-quote { border-color:var(--mint); }
+  .cc  .card-quote { border-color:var(--coral); }
+  .cs  .card-quote { border-color:var(--sky); }
+  .cp  .card-quote { border-color:var(--peach); }
+  .cl  .card-quote { border-color:var(--lav); }
+  .csa .card-quote { border-color:var(--sage); }
+  .ca  .card-quote { border-color:var(--aqua); }
+  .cr  .card-quote { border-color:var(--rose); }
+  .ct  .card-quote { border-color:var(--teal); }
+  .cle .card-quote { border-color:var(--lemon); }
+  .cli .card-quote { border-color:var(--lilac); }
+  .csl .card-quote { border-color:var(--slate); }
+  .cre .card-quote { border-color:var(--red); }
+  .ccr .card-quote { border-color:var(--cream); }
+  .cfe .card-quote { border-color:var(--fern); }
+  .cma .card-quote { border-color:var(--magenta); }
+  .cpe .card-quote { border-color:var(--periwinkle); }
+  .cgr .card-quote { border-color:#888; }
+  .cpur .card-quote { border-color:#FF9E5E; }
+
+  .card-code {
+    background:#000; border:1px solid #1e2533;
+    padding:10px 12px;
+    font-family:'Space Mono',monospace;
+    font-size:11px; line-height:1.9;
+    overflow-x:auto; margin-bottom:11px;
+    tab-size:4;
+  }
+
+  /* Haskell syntax highlight */
+  .kw  { color:#569CD6; }   /* keywords */
+  .ty  { color:#4EC9B0; }   /* types */
+  .st  { color:#CE9178; }   /* strings */
+  .nm  { color:#B5CEA8; }   /* numbers */
+  .cm  { color:#4a6a4a; }   /* comments */
+  .fn  { color:#DCDCAA; }   /* functions */
+  .op  { color:#FFD166; }   /* operators */
+  .lm  { color:#C586C0; }   /* lambda λ */
+  .ct2 { color:#9CDCFE; }   /* constructors */
+
+  .card-note {
+    font-size:11px; font-family:'Space Mono',monospace;
+    padding:7px 11px; border:1px dashed; color:#aaa;
+  }
+  .cg  .card-note { border-color:var(--gold);   background:rgba(255,209,102,.05); }
+  .cm  .card-note { border-color:var(--mint);   background:rgba(6,214,160,.05); }
+  .cc  .card-note { border-color:var(--coral);  background:rgba(239,71,111,.05); }
+  .cs  .card-note { border-color:var(--sky);    background:rgba(56,182,255,.05); }
+  .cp  .card-note { border-color:var(--peach);  background:rgba(255,159,91,.05); }
+  .cl  .card-note { border-color:var(--lav);    background:rgba(181,123,255,.05); }
+  .csa .card-note { border-color:var(--sage);   background:rgba(94,219,122,.05); }
+  .ca  .card-note { border-color:var(--aqua);   background:rgba(0,212,204,.05); }
+  .cr  .card-note { border-color:var(--rose);   background:rgba(255,111,163,.05); }
+  .ct  .card-note { border-color:var(--teal);   background:rgba(46,196,182,.05); }
+  .cle .card-note { border-color:var(--lemon);  background:rgba(245,230,66,.05); }
+  .cli .card-note { border-color:var(--lilac);  background:rgba(212,170,255,.05); }
+  .csl .card-note { border-color:var(--slate);  background:rgba(138,180,204,.05); }
+  .cre .card-note { border-color:var(--red);    background:rgba(255,68,68,.05); }
+  .ccr .card-note { border-color:var(--cream);  background:rgba(255,229,180,.05); }
+  .cfe .card-note { border-color:var(--fern);   background:rgba(130,196,90,.05); }
+  .cma .card-note { border-color:var(--magenta);background:rgba(255,61,204,.05); }
+  .cpe .card-note { border-color:var(--periwinkle);background:rgba(123,143,255,.05); }
+  .cgr .card-note { border-color:#555;          background:rgba(120,120,120,.05); }
+  .cpur .card-note { border-color:#FF9E5E;      background:rgba(255,158,94,.05); }
+
+  .note-lbl {
+    font-size:9px; letter-spacing:2px; margin-bottom:2px; opacity:.55;
+  }
+
+  /* reduction arrow */
+  .red-arrow {
+    display:inline-block;
+    color:var(--gold); font-family:'Space Mono',monospace;
+    font-size:13px; margin:0 4px;
+  }
+
+  /* ── WORKSHEET ── */
+  .worksheet-section { margin-top:52px; }
+
+  .sec-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:34px; color:var(--gold); letter-spacing:2px; margin-bottom:3px;
+  }
+  .sec-sub {
+    font-family:'Space Mono',monospace;
+    font-size:11.5px; color:#3a4a5a; margin-bottom:22px;
+  }
+
+  .exercise {
+    border:2px solid #1a2230;
+    margin-bottom:18px; background:#090d14;
+  }
+  .ex-header {
+    background:#111827; padding:10px 17px;
+    display:flex; align-items:center; gap:12px;
+    border-bottom:2px solid #1a2230;
+  }
+  .ex-num {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px; color:var(--gold); min-width:28px;
+  }
+  .ex-title { font-weight:700; font-size:14px; color:var(--white); }
+  .ex-body  { padding:14px 17px; }
+
+  .ex-task {
+    font-size:13px; color:#aaa; margin-bottom:10px; line-height:1.6;
+  }
+  .ex-task strong { color:var(--white); }
+
+  .ans-code {
+    background:#000; border:1px solid #1a2230;
+    padding:10px 12px; font-family:'Space Mono',monospace;
+    font-size:11px; line-height:1.9; margin-bottom:9px;
+  }
+
+  .blank {
+    display:inline-block; border-bottom:2px solid var(--gold);
+    height:16px; vertical-align:bottom; margin:0 3px;
+  }
+  .bl-lg { width:120px; }
+  .bl-md { width:85px; }
+  .bl-sm { width:55px; }
+  .bl-xs { width:38px; }
+
+  .match-table {
+    width:100%; border-collapse:collapse; font-size:12px;
+  }
+  .match-table th {
+    background:#111827; padding:7px 11px;
+    border:1px solid #1a2230;
+    font-family:'Bebas Neue',sans-serif; font-size:15px;
+    letter-spacing:1px; color:var(--gold);
+  }
+  .match-table td {
+    padding:7px 11px; border:1px solid #131c28; vertical-align:top;
+  }
+  .match-table .code-col {
+    font-family:'Space Mono',monospace; color:var(--mint); width:55%;
+  }
+  .match-table .ans-col { color:#333; font-style:italic; width:40%; }
+  .match-table .arr-col {
+    color:var(--gold); font-family:'Bebas Neue',sans-serif;
+    font-size:17px; text-align:center; width:5%; padding:7px 2px;
+  }
+
+  .ans-line {
+    border-bottom:2px solid #1a2230;
+    height:33px; margin:6px 0; width:100%;
+  }
+
+  /* BOSS */
+  .boss-section {
+    margin-top:44px; padding:22px;
+    border:3px solid var(--red); background:#0e0000;
+    position:relative;
+  }
+  .boss-label {
+    position:absolute; top:-13px; left:18px;
+    background:var(--red); color:#000;
+    font-family:'Bebas Neue',sans-serif; font-size:16px;
+    padding:2px 14px; letter-spacing:2px;
+  }
+  .boss-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px;
+  }
+  .boss-card {
+    background:#0d0d0d; border:1px solid #3a0000; padding:13px;
+  }
+  .boss-name {
+    font-family:'Bebas Neue',sans-serif; font-size:20px;
+    color:var(--red); margin-bottom:5px;
+  }
+  .boss-desc { font-size:12.5px; color:#aaa; line-height:1.6; margin-bottom:8px; }
+  .boss-code {
+    font-family:'Space Mono',monospace; font-size:10.5px;
+    background:#000; padding:7px; color:var(--red);
+    border:1px solid #2a0000;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top:54px; padding-top:20px;
+    border-top:2px solid #111827;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Space Mono',monospace; font-size:10.5px; color:#2a3a4a;
+  }
+  .score-box {
+    border:2px solid #1a2230; padding:7px 20px; text-align:center;
+  }
+  .score-box span {
+    display:block; font-family:'Bebas Neue',sans-serif;
+    font-size:21px; color:var(--white); margin-top:2px;
+  }
+
+  @media print {
+    body { background:#fff; color:#000; padding:16px; }
+    .card { break-inside:avoid; }
+    .exercise { break-inside:avoid; }
+    .boss-section { break-inside:avoid; }
+    .cards-grid { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="lambda-deco">λ</div>
+  <div class="header-badge">FUNKCIONÁLIS PARADIGMA · HASKELL STÍLUSÚ KÓDPÉLDÁK · VOL. 3</div>
+  <h1>
+    <span class="l1">FUNKCIONÁLIS</span>
+    <span class="l2">BRAINROT</span>
+    <span class="l3">WORKSHEET</span>
+  </h1>
+  <div class="header-sub">// f(x) = x &nbsp;·&nbsp; minden kifejezés értéke ugyanaz a szöveg bármely pontján &nbsp;·&nbsp; nincs mellékhatás* //</div>
+</div>
+
+<div class="stripe"></div>
+
+<!-- ══════════════ CARDS ══════════════ -->
+<div class="cards-grid">
+
+<!-- 1. Lambda Lali -->
+<div class="card cg">
+  <div class="card-header">
+    <div class="card-emoji">λ</div>
+    <div>
+      <div class="card-name">Lambda Lali</div>
+      <div class="card-concept" style="color:var(--gold)">LAMBDA / NÉVTELEN FÜGGVÉNY &nbsp;·&nbsp; \x -> ...</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Lali <strong>névtelen</strong>. Senkinek nem mutatkozik be — csak csinálja a dolgát.
+      Egy rövid, egyszer használatos függvény, amit nem érdemes külön megnevezni.
+      A funkcionális programozás lelke.
+    </p>
+    <div class="card-quote">"Nincs nevem. Van feladatom."</div>
+    <div class="card-code">
+<span class="cm">-- névtelen függvény Haskell-ben:</span>
+<span class="lm">\x</span> <span class="op">-></span> x <span class="op">*</span> <span class="nm">2</span>
+
+<span class="cm">-- alkalmazva:</span>
+<span class="fn">map</span> (<span class="lm">\x</span> <span class="op">-></span> x <span class="op">+</span> <span class="nm">1</span>) [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]
+<span class="cm">-- → [2,3,4]</span>
+
+<span class="cm">-- lambda változóhoz kötve:</span>
+<span class="kw">let</span> <span class="fn">ketszerez</span> <span class="op">=</span> <span class="lm">\x</span> <span class="op">-></span> x <span class="op">*</span> <span class="nm">2</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 LAMBDA KALKULUS</div>
+      Az egész funkcionális paradigma a lambda kalkuluson alapul (Church, 1930-as évek).
+    </div>
+  </div>
+</div>
+
+<!-- 2. Redukciós Réka -->
+<div class="card cm">
+  <div class="card-header">
+    <div class="card-emoji">🔁</div>
+    <div>
+      <div class="card-name">Redukciós Réka</div>
+      <div class="card-concept" style="color:var(--mint)">REDUKCIÓS RENDSZER · REDUKÁLÁS &nbsp;·&nbsp; →β</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Réka <strong>egyszerűsít</strong>. Egy kifejezést addig cserél egyenértékűbb,
+      de egyszerűbb alakokra, amíg már tovább nem lehet. Ez a kiértékelés lényege:
+      <strong>lépésről lépésre redukálni</strong>, amíg el nem érjük a normál formát.
+    </p>
+    <div class="card-quote">"Minden lépéssel közelebb a végső igazsághoz."</div>
+    <div class="card-code">
+<span class="cm">-- redukciós lépések (β-redukció):</span>
+(<span class="lm">\x</span> <span class="op">-></span> x <span class="op">+</span> <span class="nm">1</span>) <span class="nm">5</span>
+<span class="cm">--  ↓  x helyére 5 kerül</span>
+<span class="nm">5</span> <span class="op">+</span> <span class="nm">1</span>
+<span class="cm">--  ↓  kiértékelés</span>
+<span class="nm">6</span>          <span class="cm">-- normál forma!</span>
+
+<span class="cm">-- α-redukció: változók átnevezése</span>
+<span class="cm">-- η-redukció: \x -> f x  ≡  f</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 REDUKCIÓS SZABÁLYOK</div>
+      β: argumentum behelyettesítés &nbsp;|&nbsp; α: átnevezés &nbsp;|&nbsp; η: egyszerűsítés
+    </div>
+  </div>
+</div>
+
+<!-- 3. Normál Forma Norbert -->
+<div class="card cc">
+  <div class="card-header">
+    <div class="card-emoji">✅</div>
+    <div>
+      <div class="card-name">Normál Forma Norbert</div>
+      <div class="card-concept" style="color:var(--coral)">NORMAL FORM &nbsp;·&nbsp; nem redukálható tovább</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Norbert a <strong>végállomás</strong>. Egy kifejezés normál formában van,
+      ha már <strong>egyetlen redukciós lépéssel sem egyszerűsíthető tovább</strong>.
+      Nem minden kifejezésnek van normál formája — van, ami örökké redukálódik.
+    </p>
+    <div class="card-quote">"Tovább már nem megyek. Ez az igazság."</div>
+    <div class="card-code">
+<span class="cm">-- Normál formák:</span>
+<span class="nm">42</span>           <span class="cm">-- ✓ szám, tovább nem megy</span>
+<span class="st">"hello"</span>      <span class="cm">-- ✓ string literál</span>
+<span class="fn">True</span>         <span class="cm">-- ✓ Bool konstruktor</span>
+
+<span class="cm">-- NEM normál forma (redukálható):</span>
+<span class="nm">2</span> <span class="op">+</span> <span class="nm">3</span>        <span class="cm">-- → 5</span>
+<span class="fn">length</span> [<span class="nm">1</span>,<span class="nm">2</span>] <span class="cm">-- → 2</span>
+
+<span class="cm">-- Végtelen (nincs normál formája!):</span>
+<span class="kw">let</span> <span class="fn">x</span> <span class="op">=</span> x <span class="kw">in</span> x <span class="cm">-- ∞ loop</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">⚠ CHURCH-ROSSER TÉTEL</div>
+      Ha egy kifejezésnek van normál formája, az <strong>egyedi</strong> — a sorrend nem számít.
+    </div>
+  </div>
+</div>
+
+<!-- 4. Függvényösszetétel Fanni -->
+<div class="card cs">
+  <div class="card-header">
+    <div class="card-emoji">🔗</div>
+    <div>
+      <div class="card-name">Függvényösszetétel Fanni</div>
+      <div class="card-concept" style="color:var(--sky)">FUNCTION COMPOSITION &nbsp;·&nbsp; (f ∘ g)(x) = f(g(x))</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Fanni <strong>összekapcsol</strong> függvényeket. Az egyik kimenetét a másik bemenetére
+      köti — mint csöveket egymáshoz. Az eredmény egy <strong>új függvény</strong>,
+      ami mindkét lépést egyszerre csinálja.
+    </p>
+    <div class="card-quote">"Én csak közvetítek g és f között. Az eredmény az övék."</div>
+    <div class="card-code">
+<span class="cm">-- Haskell-ben a (.) operátor:</span>
+<span class="fn">dupla</span> <span class="op">=</span> (<span class="op">*</span><span class="nm">2</span>)
+<span class="fn">negyel</span> <span class="op">=</span> (<span class="op">+</span><span class="nm">4</span>)
+
+<span class="fn">dupla_majd_negyel</span> <span class="op">=</span> <span class="fn">negyel</span> <span class="op">.</span> <span class="fn">dupla</span>
+<span class="cm">-- (negyel . dupla)(3)</span>
+<span class="cm">-- = negyel(dupla(3))</span>
+<span class="cm">-- = negyel(6) = 10</span>
+
+<span class="fn">dupla_majd_negyel</span> <span class="nm">3</span> <span class="cm">-- → 10</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 PIPELINE</div>
+      A <code>|></code> (pipe) operátor soknyelvben ugyanez: <code>3 |> dupla |> negyel</code>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Rekurzív Rita -->
+<div class="card cp">
+  <div class="card-header">
+    <div class="card-emoji">🌀</div>
+    <div>
+      <div class="card-name">Rekurzív Rita</div>
+      <div class="card-concept" style="color:var(--peach)">REKURZIÓ FP-BEN &nbsp;·&nbsp; nincs loop, csak önhívás</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      A funkcionális paradigmában <strong>nincs for/while ciklus</strong>.
+      Rita az egyetlen ismétlési eszköz: a <strong>rekurzió</strong>.
+      Minden iteratív algoritmus kifejezhető rekurzívan.
+      A base case a kulcs — nélküle Rita örökre szól.
+    </p>
+    <div class="card-quote">"Ciklus? Soha nem hallottam. Van viszont önmagam."</div>
+    <div class="card-code">
+<span class="cm">-- iteratív helyett rekurzív összeg:</span>
+<span class="fn">osszeg</span> [] <span class="op">=</span> <span class="nm">0</span>           <span class="cm">-- base case</span>
+<span class="fn">osszeg</span> (x<span class="op">:</span>xs) <span class="op">=</span> x <span class="op">+</span> <span class="fn">osszeg</span> xs
+
+<span class="fn">osszeg</span> [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]
+<span class="cm">-- = 1 + osszeg [2,3]</span>
+<span class="cm">-- = 1 + 2 + osszeg [3]</span>
+<span class="cm">-- = 1 + 2 + 3 + 0 = 6</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 MINTAILLESZTÉSSEL EGYÜTT</div>
+      FP-ben a rekurzió és a mintaillesztés szinte mindig kéz a kézben jár.
+    </div>
+  </div>
+</div>
+
+<!-- 6. Tail-Rekurzív Tünde -->
+<div class="card cl">
+  <div class="card-header">
+    <div class="card-emoji">🐢</div>
+    <div>
+      <div class="card-name">Tail-Rekurzív Tünde</div>
+      <div class="card-concept" style="color:var(--lav)">TAIL RECURSION &nbsp;·&nbsp; az utolsó hívás maga a rekurzió</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Tünde okosabb Ritánál: a rekurzív hívás <strong>az utolsó dolog</strong>,
+      amit csinál — semmi nem várja az eredményét visszafelé. Ezért a fordító
+      <strong>nem halmoz stack frame-eket</strong> — helyette csak frissíti a paramétert.
+      Stack Overflow Stan nem tud belépni.
+    </p>
+    <div class="card-quote">"Ha én vagyok az utolsó, nincs miért várakozni."</div>
+    <div class="card-code">
+<span class="cm">-- NEM tail-recursive (vár visszafelé):</span>
+<span class="fn">osszeg</span> (x<span class="op">:</span>xs) <span class="op">=</span> x <span class="op">+</span> <span class="fn">osszeg</span> xs
+<span class="cm">--              ^ ezt még ki kell számolni!</span>
+
+<span class="cm">-- TAIL recursive (akkumulátor):</span>
+<span class="fn">osszegT</span> [] acc <span class="op">=</span> acc
+<span class="fn">osszegT</span> (x<span class="op">:</span>xs) acc <span class="op">=</span>
+    <span class="fn">osszegT</span> xs (acc <span class="op">+</span> x) <span class="cm">-- utolsó lépés!</span>
+
+<span class="fn">osszegT</span> [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>] <span class="nm">0</span> <span class="cm">-- → 6</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 TCO</div>
+      Tail Call Optimization: sok fordító automatikusan iterációvá alakítja.
+    </div>
+  </div>
+</div>
+
+<!-- 7. Lusta László -->
+<div class="card csa">
+  <div class="card-header">
+    <div class="card-emoji">😴</div>
+    <div>
+      <div class="card-name">Lusta László</div>
+      <div class="card-concept" style="color:var(--sage)">LAZY EVALUATION &nbsp;·&nbsp; call-by-need</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      László <strong>nem számol, amíg nem muszáj</strong>. Ha egy kifejezésre
+      nincs szükség, el sem végzi. Ez lehetővé teszi a <strong>végtelen adatszerkezeteket</strong>
+      is — László csak annyit számol belőlük, amennyit tényleg kérnek.
+    </p>
+    <div class="card-quote">"Miért számolnék olyat, amit úgyse kérsz?"</div>
+    <div class="card-code">
+<span class="cm">-- Haskell alapból lusta!</span>
+<span class="cm">-- Végtelen lista — László nyugodt:</span>
+<span class="kw">let</span> <span class="fn">vegtelenSzamok</span> <span class="op">=</span> [<span class="nm">1</span>..]
+
+<span class="cm">-- Csak az első 5-öt kéri → csak azt számolja:</span>
+<span class="fn">take</span> <span class="nm">5</span> <span class="fn">vegtelenSzamok</span>
+<span class="cm">-- → [1,2,3,4,5]  (nem számolja a többi millió elemet)</span>
+
+<span class="cm">-- Fibonacci végtelen sorozat:</span>
+<span class="fn">fibs</span> <span class="op">=</span> <span class="nm">0</span> <span class="op">:</span> <span class="nm">1</span> <span class="op">:</span> <span class="fn">zipWith</span> (<span class="op">+</span>) <span class="fn">fibs</span> (<span class="fn">tail</span> <span class="fn">fibs</span>)
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">⚠ VESZÉLY</div>
+      László néha kiszámíthatatlan memóriát és lassulást okoz (thunk halmozódás).
+    </div>
+  </div>
+</div>
+
+<!-- 8. Mohó Mónika -->
+<div class="card ca">
+  <div class="card-header">
+    <div class="card-emoji">🦅</div>
+    <div>
+      <div class="card-name">Mohó Mónika</div>
+      <div class="card-concept" style="color:var(--aqua)">EAGER EVALUATION &nbsp;·&nbsp; call-by-value</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Mónika <strong>azonnal kiszámol mindent</strong>, amint látja.
+      Nem vár kérésre — ha van egy kifejezés, máris fut.
+      Kiszámítható és gyors, de végtelen listával <strong>lefagy</strong>.
+    </p>
+    <div class="card-quote">"Látom, számolom. Várni? Az nem az én stílusom."</div>
+    <div class="card-code">
+<span class="cm">-- Python, JavaScript, ML = mohó</span>
+<span class="cm">-- Haskellben: seq vagy BangPatterns kényszeríti</span>
+
+<span class="cm">-- Mohó Mónikánál:</span>
+<span class="fn">f</span>(g(<span class="nm">3</span>))
+<span class="cm">-- ELŐSZÖR g(3) fut le</span>
+<span class="cm">-- AZTÁN f(eredmény)</span>
+
+<span class="cm">-- Végtelen lista? Mónika meghal:</span>
+<span class="cm">-- take 5 [1..] → ∞ loop mohó nyelvben</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 LAZY vs EAGER</div>
+      Lusta: call-by-need. Mohó: call-by-value. Strict: call-by-value + kiértékeli hamarabb.
+    </div>
+  </div>
+</div>
+
+<!-- 9. Mellékhatás Máté -->
+<div class="card cr">
+  <div class="card-header">
+    <div class="card-emoji">💥</div>
+    <div>
+      <div class="card-name">Mellékhatás Máté</div>
+      <div class="card-concept" style="color:var(--rose)">SIDE EFFECT &nbsp;·&nbsp; a tiszta FP ellensége</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Máté <strong>olyat csinál, amit nem mondott</strong>. Egy függvény mellékhatásos,
+      ha visszatérési értékén kívül <strong>megváltoztat valamit a külvilágban</strong>:
+      fájlt ír, képernyőre nyomtat, globális változót módosít, hálózathoz nyúl.
+      A tiszta FP kerüli Mátét.
+    </p>
+    <div class="card-quote">"Senki nem kért, hogy ezt csináljam. De megtettem."</div>
+    <div class="card-code">
+<span class="cm">-- Mellékhatás: konzolra írás</span>
+<span class="fn">putStrLn</span> <span class="st">"Hello"</span> <span class="cm">-- IO mellékhatás</span>
+
+<span class="cm">-- Mellékhatás: fájlba írás, globális változó</span>
+<span class="cm">-- Haskellben Máté csak IO monadban élhet:</span>
+<span class="fn">main</span> <span class="op">::</span> <span class="ty">IO</span> ()
+<span class="fn">main</span> <span class="op">=</span> <span class="kw">do</span>
+    <span class="fn">putStrLn</span> <span class="st">"IO-ban vagyok"</span>
+    <span class="cm">-- itt Máté megjelenhet</span>
+
+<span class="cm">-- Tiszta függvény: NINCS mellékhatás</span>
+<span class="fn">negyel</span> x <span class="op">=</span> x <span class="op">*</span> <span class="nm">4</span>  <span class="cm">-- csak visszatér</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 IO MONAD</div>
+      Haskellben Máté "be van zárva" az IO monadba — nem szivárog tiszta kódba.
+    </div>
+  </div>
+</div>
+
+<!-- 10. Hivatkozási Hanna -->
+<div class="card ct">
+  <div class="card-header">
+    <div class="card-emoji">🪞</div>
+    <div>
+      <div class="card-name">Hivatkozási Hanna</div>
+      <div class="card-concept" style="color:var(--teal)">REFERENTIAL TRANSPARENCY &nbsp;·&nbsp; helyfüggetlenség</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Hanna <strong>bárhol ugyanaz</strong>. Ha egy kifejezés hivatkozásilag átlátható,
+      értéke nem függ attól, a program <em>melyik részén</em> áll.
+      <strong>Helyettesíthető az értékével</strong>, és a program viselkedése nem változik.
+      Nincs változó — csak konstans és nevesített konstans.
+    </p>
+    <div class="card-quote">"Akárhol olvasol, ugyanaz vagyok. Nincs kontextus, ami megvált."</div>
+    <div class="card-code">
+<span class="cm">-- Hivatkozásilag átlátható:</span>
+<span class="kw">let</span> <span class="fn">x</span> <span class="op">=</span> <span class="nm">2</span> <span class="op">+</span> <span class="nm">3</span>
+<span class="cm">-- x bárhol 5, mindig 5</span>
+<span class="cm">-- x + x == 10 ↔ (2+3) + (2+3) == 10 ✓</span>
+
+<span class="cm">-- NEM átlátható (pl. C++ globális változó):</span>
+<span class="cm">-- int g = 0;</span>
+<span class="cm">-- int f() { return g++; } -- más értéket ad vissza!</span>
+
+<span class="cm">-- Haskellben minden függvény átlátható:</span>
+<span class="fn">ketszerez</span> <span class="nm">5</span> <span class="cm">-- mindig 10, bárhol</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 NINCS VÁLTOZÓ</div>
+      Tiszta FP nyelvben nincs változó — csak konstansok és nevesített konstansok (let/where).
+    </div>
+  </div>
+</div>
+
+<!-- 11. Higher-Order Hugó -->
+<div class="card cle">
+  <div class="card-header">
+    <div class="card-emoji">🏗️</div>
+    <div>
+      <div class="card-name">Higher-Order Hugó</div>
+      <div class="card-concept" style="color:var(--lemon)">HIGHER ORDER FUNCTIONS &nbsp;·&nbsp; map, filter, fold</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Hugó <strong>függvényeket vesz át és/vagy ad vissza</strong> — tehát
+      a függvény nála elsőrendű polgár, simán átadható paraméterként.
+      A <code>map</code>, <code>filter</code>, <code>fold</code> mind Hugó munkái.
+    </p>
+    <div class="card-quote">"Nekem add a függvényt. Én majd tudok vele mit kezdeni."</div>
+    <div class="card-code">
+<span class="cm">-- map: alkalmaz minden elemre</span>
+<span class="fn">map</span> (<span class="op">*</span><span class="nm">2</span>) [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]  <span class="cm">-- → [2,4,6]</span>
+
+<span class="cm">-- filter: szűr feltétel szerint</span>
+<span class="fn">filter</span> <span class="fn">even</span> [<span class="nm">1</span>..<span class="nm">6</span>]    <span class="cm">-- → [2,4,6]</span>
+
+<span class="cm">-- függvényt visszaad:</span>
+<span class="fn">szoroz</span> n <span class="op">=</span> (<span class="op">*</span>n)    <span class="cm">-- → függvényt ad</span>
+<span class="kw">let</span> <span class="fn">haromszoroz</span> <span class="op">=</span> <span class="fn">szoroz</span> <span class="nm">3</span>
+<span class="fn">haromszoroz</span> <span class="nm">7</span>       <span class="cm">-- → 21</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 FIRST CLASS CITIZEN</div>
+      Ha egy nyelvben a függvény "first class citizen", bármit lehet vele, mint adattal.
+    </div>
+  </div>
+</div>
+
+<!-- 12. Curry Csaba -->
+<div class="card cli">
+  <div class="card-header">
+    <div class="card-emoji">🍛</div>
+    <div>
+      <div class="card-name">Curry Csaba</div>
+      <div class="card-concept" style="color:var(--lilac)">CURRYING &nbsp;·&nbsp; f(a,b) → f(a)(b)</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Csaba <strong>nem kér mindent egyszerre</strong>. Egy többparaméteres függvényt
+      átalakít egymásba ágyazott, egyparaméteres függvények sorozatává.
+      Ha csak egy paramétert adsz, <strong>részlegesen alkalmazott függvényt</strong> kapsz vissza.
+    </p>
+    <div class="card-quote">"Adj egyet. Kapsz egy függvényt. Adj még egyet. Kapsz eredményt."</div>
+    <div class="card-code">
+<span class="cm">-- Haskellben MINDEN függvény curryzett:</span>
+<span class="fn">add</span> <span class="op">::</span> <span class="ty">Int</span> <span class="op">-></span> <span class="ty">Int</span> <span class="op">-></span> <span class="ty">Int</span>
+<span class="fn">add</span> x y <span class="op">=</span> x <span class="op">+</span> y
+
+<span class="cm">-- részleges alkalmazás:</span>
+<span class="kw">let</span> <span class="fn">add5</span> <span class="op">=</span> <span class="fn">add</span> <span class="nm">5</span>  <span class="cm">-- Int -> Int</span>
+<span class="fn">add5</span> <span class="nm">3</span>           <span class="cm">-- → 8</span>
+
+<span class="cm">-- add 5 3 == (add 5) 3 == add5 3 == 8</span>
+<span class="fn">map</span> (<span class="fn">add</span> <span class="nm">10</span>) [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>] <span class="cm">-- → [11,12,13]</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 HASKELL CURRY UTÁN</div>
+      A Haskell programozási nyelvet Haskell Curry matematikusról nevezték el.
+    </div>
+  </div>
+</div>
+
+<!-- 13. Mintaillesztő Miska -->
+<div class="card csl">
+  <div class="card-header">
+    <div class="card-emoji">🎯</div>
+    <div>
+      <div class="card-name">Mintaillesztő Miska</div>
+      <div class="card-concept" style="color:var(--slate)">PATTERN MATCHING &nbsp;·&nbsp; strukturális overload</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Miska <strong>az adatok formájára figyel</strong>. Ahelyett hogy if-else
+      láncot írna, a függvény különböző "mintákra" különbözőképp reagál.
+      Ez az FP-s overload: nem a típus, hanem a <strong>struktúra</strong> dönti el,
+      melyik ág fut le.
+    </p>
+    <div class="card-quote">"Mutasd az alakodat. Akkor tudom, mit tegyek veled."</div>
+    <div class="card-code">
+<span class="fn">leiras</span> <span class="op">::</span> [<span class="ty">Int</span>] <span class="op">-></span> <span class="ty">String</span>
+<span class="fn">leiras</span> []     <span class="op">=</span> <span class="st">"üres lista"</span>
+<span class="fn">leiras</span> [x]    <span class="op">=</span> <span class="st">"egy elem"</span>
+<span class="fn">leiras</span> [x, y] <span class="op">=</span> <span class="st">"két elem"</span>
+<span class="fn">leiras</span> (x<span class="op">:</span>_)  <span class="op">=</span> <span class="st">"több mint kettő"</span>
+
+<span class="fn">leiras</span> []      <span class="cm">-- → "üres lista"</span>
+<span class="fn">leiras</span> [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>] <span class="cm">-- → "több mint kettő"</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 GUARD-OK</div>
+      Mintaillesztés kiegészíthető guard-okkal: <code>| x > 0 = "pozitív"</code>
+    </div>
+  </div>
+</div>
+
+<!-- 14. Immutable Imre -->
+<div class="card cre">
+  <div class="card-header">
+    <div class="card-emoji">🧊</div>
+    <div>
+      <div class="card-name">Immutable Imre</div>
+      <div class="card-concept" style="color:var(--red)">IMMUTABILITY &nbsp;·&nbsp; értékek nem változnak</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Imre <strong>soha nem változik</strong>. Ha egyszer lett egy értéke, az az övé örökre.
+      Nincs <em>Változó Vlad</em> felülírás — ha "új" értéket akarsz, <strong>új konstanst</strong>
+      hozol létre. Imre teszi lehetővé a hivatkozási átláthatóságot.
+    </p>
+    <div class="card-quote">"Amit kaptam, az vagyok. Senki nem veheti el."</div>
+    <div class="card-code">
+<span class="cm">-- Haskellben MINDEN immutable:</span>
+<span class="kw">let</span> <span class="fn">x</span> <span class="op">=</span> <span class="nm">5</span>
+<span class="cm">-- x = 6 → FORDÍTÁSI HIBA</span>
+
+<span class="cm">-- "módosítás" = új érték létrehozása:</span>
+<span class="kw">let</span> <span class="fn">lista</span>  <span class="op">=</span> [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]
+<span class="kw">let</span> <span class="fn">lista2</span> <span class="op">=</span> <span class="nm">0</span> <span class="op">:</span> <span class="fn">lista</span>  <span class="cm">-- [0,1,2,3]</span>
+<span class="cm">-- lista változatlan: [1,2,3]</span>
+
+<span class="cm">-- Record update syntax (új rekord):</span>
+<span class="kw">let</span> <span class="fn">k2</span> <span class="op">=</span> k { kor <span class="op">=</span> <span class="nm">4</span> }  <span class="cm">-- k megmarad</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 THREAD SAFETY</div>
+      Immutable adatok race condition és deadlock nélkül oszthatók szálak között.
+    </div>
+  </div>
+</div>
+
+<!-- 15. Változó Vazul -->
+<div class="card ccr">
+  <div class="card-header">
+    <div class="card-emoji">📌</div>
+    <div>
+      <div class="card-name">Változó Vazul</div>
+      <div class="card-concept" style="color:var(--cream)">VÁLTOZÓK FP-BEN &nbsp;·&nbsp; csak konstansok léteznek</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Vazul <strong>más, mint Vol. 1 Vlad</strong>. FP-ben nincs újraírható változó —
+      csak <strong>konstansok</strong> (fix értékek) és <strong>nevesített konstansok</strong>
+      (let/where kötések), amik egyszer kapnak értéket és soha nem változnak.
+    </p>
+    <div class="card-quote">"Vlad cserélgethet. Én? Én vagyok, aki vagyok."</div>
+    <div class="card-code">
+<span class="cm">-- FP-ben ez NEM változó, hanem kötés:</span>
+<span class="kw">let</span> <span class="fn">n</span> <span class="op">=</span> <span class="nm">42</span>      <span class="cm">-- nevesített konstans</span>
+
+<span class="cm">-- where-ben is:</span>
+<span class="fn">kerulet</span> r <span class="op">=</span> <span class="nm">2</span> <span class="op">*</span> pi <span class="op">*</span> r
+    <span class="kw">where</span> pi <span class="op">=</span> <span class="nm">3.14159</span> <span class="cm">-- lokális konstans</span>
+
+<span class="cm">-- Nincs ez:</span>
+<span class="cm">-- n = n + 1  →  ÉRTELMETLEN (körkörös def.)</span>
+
+<span class="cm">-- Állapot? → rekurzív paraméterben tárolódik</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 MIÉRT JÓ?</div>
+      Ha nincs változó, nem kell nyomon követni, mit változtatott meg ki. Könnyebb tesztelni.
+    </div>
+  </div>
+</div>
+
+<!-- 16. Tiszta Tivadar & Nem Tiszta Nóra -->
+<div class="card cfe">
+  <div class="card-header">
+    <div class="card-emoji">😇😈</div>
+    <div>
+      <div class="card-name">Tiszta Tivadar &amp; Nem Tiszta Nóra</div>
+      <div class="card-concept" style="color:var(--fern)">PURE vs IMPURE FUNCTIONS / LANGUAGES</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      <strong>Tivadar (pure)</strong>: ugyanarra a bemenetre mindig ugyanazt adja vissza,
+      és semmilyen mellékhatása nincs. <strong>Nóra (impure)</strong>: néha máshogy viselkedik,
+      olvas/ír, vagy globális állapotot változtat.
+    </p>
+    <div class="card-quote">"Tivadar: 'Adj 5-öt, kapsz 25-öt. Mindig.' — Nóra: 'Attól függ.'"</div>
+    <div class="card-code">
+<span class="cm">-- PURE (Tivadar): determinisztikus, mellékhatás nélkül</span>
+<span class="fn">negyzetEl</span> x <span class="op">=</span> x <span class="op">*</span> x     <span class="cm">-- mindig x²</span>
+
+<span class="cm">-- IMPURE (Nóra): IO, random, globális állapot</span>
+<span class="fn">getLine</span>     <span class="cm">-- más értéket adhat vissza</span>
+<span class="fn">randomRIO</span> (<span class="nm">1</span>,<span class="nm">6</span>) <span class="cm">-- nem determinisztikus</span>
+
+<span class="cm">-- Tiszta NYELVEK: Haskell (IO monadba zárja Nórát)</span>
+<span class="cm">-- Nem tiszta: Python, JavaScript, Erlang, Scala</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 HATÁR</div>
+      Haskell nem tiltja Nórát — csak elkülöníti. IO típus jelzi: "itt Nóra van."
+    </div>
+  </div>
+</div>
+
+<!-- 17. Term Újraíró Tamás -->
+<div class="card cma">
+  <div class="card-header">
+    <div class="card-emoji">📜</div>
+    <div>
+      <div class="card-name">Term Újraíró Tamás</div>
+      <div class="card-concept" style="color:var(--magenta)">TERM REWRITING SYSTEMS &nbsp;·&nbsp; l → r szabályok</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Tamás <strong>szabályokat alkalmaz szimbólikus kifejezésekre</strong>.
+      Ha egy kifejezés illeszkedik egy bal oldalra (<code>l</code>),
+      lecseréli a jobb oldalra (<code>r</code>). A redukciós rendszer formalizált változata —
+      az FP kiértékelés elméleti alapja.
+    </p>
+    <div class="card-quote">"Ha l-t látok, r-t írok. Nincs miért, így van megírva."</div>
+    <div class="card-code">
+<span class="cm">-- Term újraírási szabályok (elméleti jelölés):</span>
+<span class="cm">-- ADD(0, x)   → x</span>
+<span class="cm">-- ADD(S(x),y) → S(ADD(x, y))</span>
+
+<span class="cm">-- Példa lépések:</span>
+<span class="cm">-- ADD(S(0), S(0))</span>
+<span class="cm">-- → S(ADD(0, S(0)))  [2. szabály]</span>
+<span class="cm">-- → S(S(0))          [1. szabály]</span>
+<span class="cm">-- = 2 ✓</span>
+
+<span class="cm">-- Haskell mintaillesztés = term újraírás!</span>
+<span class="fn">add</span> <span class="nm">0</span>     y <span class="op">=</span> y
+<span class="fn">add</span> (n<span class="op">+</span><span class="nm">1</span>) y <span class="op">=</span> <span class="nm">1</span> <span class="op">+</span> <span class="fn">add</span> n y
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 CONFLUENCE</div>
+      Egy TRS "konfluens", ha a szabályok sorrendjétől független az eredmény.
+    </div>
+  </div>
+</div>
+
+<!-- 18. Gráf Újraíró Gábor -->
+<div class="card cpe">
+  <div class="card-header">
+    <div class="card-emoji">🕸️</div>
+    <div>
+      <div class="card-name">Gráf Újraíró Gábor</div>
+      <div class="card-concept" style="color:var(--periwinkle)">GRAPH REWRITING SYSTEMS &nbsp;·&nbsp; megosztott struktúrák</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Gábor olyan, mint Tamás, de <strong>gráf struktúrán</strong> dolgozik — nem fán.
+      Azért, mert a gráf <strong>megosztott csomópontokat</strong> engedélyez:
+      ha kétszer ugyanazt a kifejezést használod, nem másolod, hanem rámutat mindkettő.
+      Ezzel a lusta kiértékelés hatékonyan megvalósítható.
+    </p>
+    <div class="card-quote">"Tamás fán dolgozik. Én gráfon. Én nem másolom a csomópontokat."</div>
+    <div class="card-code">
+<span class="cm">-- Fa (term): x+x kétszer tárolja x-et</span>
+<span class="cm">--    (+)</span>
+<span class="cm">--   /   \</span>
+<span class="cm">--  x     x   ← két példány!</span>
+
+<span class="cm">-- Gráf: x+x megosztja x-et</span>
+<span class="cm">--    (+)</span>
+<span class="cm">--   /   \</span>
+<span class="cm">--   └── x ┘  ← egy csomópont, két él</span>
+
+<span class="cm">-- GHC (Haskell fordító) gráf újraírást használ!</span>
+<span class="cm">-- Így nem értékeli ki x-et kétszer: let x = expr in x+x</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 LAZY + GRAPH</div>
+      A lusta kiértékelés + gráf újraírás = minden részkifejezés max. egyszer értékelődik ki.
+    </div>
+  </div>
+</div>
+
+<!-- 19. Típus Tímea -->
+<div class="card cgr">
+  <div class="card-header">
+    <div class="card-emoji">🏷️</div>
+    <div>
+      <div class="card-name">Típus Tímea</div>
+      <div class="card-concept" style="color:#aaa">TYPE SYSTEM &nbsp;·&nbsp; Int, Bool, Maybe, [a], a->b</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Tímea <strong>mindenre rábélyegez egy típust</strong>, és a fordító ellenőrzi,
+      hogy a bélyegek stimmelnek-e. Haskellben a típusrendszer erős és statikus —
+      <strong>ha lefordul, szinte biztosan helyes</strong>. A típus dokumentál is.
+    </p>
+    <div class="card-quote">"A típusod árulja el, ki vagy. Hazudni nem lehet."</div>
+    <div class="card-code">
+<span class="cm">-- Típus annotáció:</span>
+<span class="fn">negyel</span> <span class="op">::</span> <span class="ty">Int</span> <span class="op">-></span> <span class="ty">Int</span>
+<span class="fn">negyel</span> x <span class="op">=</span> x <span class="op">*</span> <span class="nm">4</span>
+
+<span class="cm">-- Algebrai adattípus (ADT):</span>
+<span class="kw">data</span> <span class="ty">Szin</span> <span class="op">=</span> <span class="ct2">Piros</span> | <span class="ct2">Zold</span> | <span class="ct2">Kek</span>
+
+<span class="cm">-- Maybe: lehet érték, lehet semmi</span>
+<span class="fn">osztDa</span> <span class="op">::</span> <span class="ty">Int</span> <span class="op">-></span> <span class="ty">Int</span> <span class="op">-></span> <span class="ty">Maybe Int</span>
+<span class="fn">osztDa</span> _ <span class="nm">0</span> <span class="op">=</span> <span class="ct2">Nothing</span>
+<span class="fn">osztDa</span> a b <span class="op">=</span> <span class="ct2">Just</span> (a <span class="op">`div`</span> b)
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 TYPE INFERENCE</div>
+      Hindley-Milner: Tímea a legtöbbször maga kitalálja a típust — nem kell mindig írni.
+    </div>
+  </div>
+</div>
+
+<!-- 20. Fold Frida -->
+<div class="card cpur">
+  <div class="card-header">
+    <div class="card-emoji">🌯</div>
+    <div>
+      <div class="card-name">Fold Frida</div>
+      <div class="card-concept" style="color:#FF9E5E">FOLD / REDUCE &nbsp;·&nbsp; foldl, foldr</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-desc">
+      Frida <strong>összegöngyöl egy listát egyetlen értékké</strong>.
+      Egy akkumulátorból és egy függvényből indulva végigmegy minden elemen
+      és "összehajtogatja" őket. A <code>sum</code>, <code>product</code>, <code>length</code>
+      mind Frida variánsa.
+    </p>
+    <div class="card-quote">"Listát kapok. Értéket adok. A részleteket senki se lássa."</div>
+    <div class="card-code">
+<span class="cm">-- foldl (balról): ((0+1)+2)+3</span>
+<span class="fn">foldl</span> (<span class="op">+</span>) <span class="nm">0</span> [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]  <span class="cm">-- → 6</span>
+
+<span class="cm">-- foldr (jobbról): 1+(2+(3+0))</span>
+<span class="fn">foldr</span> (<span class="op">+</span>) <span class="nm">0</span> [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]  <span class="cm">-- → 6</span>
+
+<span class="cm">-- map Frida segítségével:</span>
+<span class="fn">maySajat</span> f xs <span class="op">=</span> <span class="fn">foldr</span> (\x acc <span class="op">-></span> f x <span class="op">:</span> acc) [] xs
+
+<span class="cm">-- length Fridával:</span>
+<span class="fn">lengthSajat</span> <span class="op">=</span> <span class="fn">foldl</span> (\acc _ <span class="op">-></span> acc<span class="op">+</span><span class="nm">1</span>) <span class="nm">0</span>
+    </div>
+    <div class="card-note">
+      <div class="note-lbl">💡 MINDEN FOLD</div>
+      <code>map</code>, <code>filter</code>, <code>sum</code>, <code>any</code>, <code>all</code> — mind kifejezhető fold-dal.
+    </div>
+  </div>
+</div>
+
+</div><!-- /cards-grid -->
+
+<!-- ══════════ BOSS KARAKTEREK ══════════ -->
+<div class="boss-section">
+  <div class="boss-label">⚠ BOSS KARAKTEREK — EZEKET KELL ELKERÜLNI TISZTA FP-BEN</div>
+  <p style="font-family:'Space Mono',monospace;font-size:11.5px;color:#5a2a2a;margin-bottom:14px;">
+    // Nem az FP fogalmak — hanem amitől az FP meg akar védeni
+  </p>
+  <div class="boss-grid">
+    <div class="boss-card">
+      <div class="boss-name">💀 MELLÉKHATÁS MÁTÉ (újra)</div>
+      <p class="boss-desc">
+        Ő az igazi végboss. Kiírás, fájlolvasás, adatbázis hívás, véletlen szám —
+        mind Máté. Haskell az IO monadba zárja. Más FP nyelvek nem ilyen szigorúak.
+      </p>
+      <div class="boss-code">putStrLn "boom" -- IO () típus jelzi Mátét</div>
+    </div>
+    <div class="boss-card">
+      <div class="boss-name">🌊 VÉGTELEN REKURZIÓ</div>
+      <p class="boss-desc">
+        Ha Rita elfelejt base case-t írni, Stack Overflow Stan jön FP-ben is.
+        Lusta László néha megmenti (thunk), de nem mindig.
+        Tail-rekurzív Tünde csökkenti a veszélyt.
+      </p>
+      <div class="boss-code">f x = f x  -- ∞, nincs normál forma</div>
+    </div>
+    <div class="boss-card">
+      <div class="boss-name">🎲 NEM DETERMINIZMUS</div>
+      <p class="boss-desc">
+        Ha egy függvény ugyanarra a bemenetre más eredményt ad — Hivatkozási Hanna
+        sírva menekül. Mellékhatás, globális állapot, idő függő viselkedés okozza.
+        Tesztelhetetlen, nyomkövethetetlen káosz.
+      </p>
+      <div class="boss-code">-- getTime >>= \t -> return (x + t)  -- nem ref. átlátható</div>
+    </div>
+    <div class="boss-card">
+      <div class="boss-name">🏗️ RÉSZLEGES FÜGGVÉNY</div>
+      <p class="boss-desc">
+        Egy függvény "részleges", ha nem minden bemenetre definiált.
+        <code>head []</code> Haskellben kivételt dob. Biztonságos alternatíva:
+        <code>Maybe</code> típussal mindig visszaadni <em>valamit</em>.
+      </p>
+      <div class="boss-code">head []  -- *** Exception: empty list!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WORKSHEET ══════════ -->
+<div class="worksheet-section">
+  <div class="sec-title">✏ FELADATOK</div>
+  <div class="sec-sub">// λ-kalkulustól a fold-ig — bizonyítsd be, hogy elsajátítottad a karaktereket</div>
+
+  <!-- 01 -->
+  <div class="exercise">
+    <div class="ex-header">
+      <div class="ex-num">01</div>
+      <div class="ex-title">Fogalomfelismerés — Kódrészlet → Karakter párosítás</div>
+    </div>
+    <div class="ex-body">
+      <p class="ex-task">Minden kódrészlethez írd be a megfelelő fogalmat (és karakternevet ha emlékszel)!</p>
+      <table class="match-table">
+        <tr><th>Kódrészlet / leírás</th><th class="arr-col"></th><th>Fogalom / Karakter</th></tr>
+        <tr>
+          <td class="code-col"><code>\x -> x * 2</code></td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>f . g</code> &nbsp;(pont operátor)</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>add 5</code> &nbsp;(csak egy param, visszaad fnv-t)</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>map f xs</code>, <code>filter p xs</code></td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>foldl (+) 0 [1,2,3]</code></td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>f [] = 0 &nbsp;&nbsp; f (x:xs) = ...</code></td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>take 10 [1..]</code> &nbsp;(végtelen lista)</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col">Ugyanarra a bemenetre mindig ugyanaz az eredmény</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col">A kifejezés értéke nem függ helyétől a kódban</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col">Az érték, amiből már nem lehet tovább redukálni</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 02 -->
+  <div class="exercise">
+    <div class="ex-header">
+      <div class="ex-num">02</div>
+      <div class="ex-title">Redukciós lépések — Kövesd Réka munkáját!</div>
+    </div>
+    <div class="ex-body">
+      <p class="ex-task"><strong>a)</strong> Végezd el a β-redukciókat lépésről lépésre, amíg el nem érsz a normál formáig!</p>
+      <div class="ans-code">
+(\x -> x + x) 5
+<span class="cm">-- 1. lépés (β): _________________________________</span>
+<span class="cm">-- 2. lépés:     _________________________________</span>
+<span class="cm">-- Normál forma: _________________________________</span>
+      </div>
+      <p class="ex-task"><strong>b)</strong> Mi a normál forma? Vagy nincs?</p>
+      <div class="ans-code">
+(a) 2 + 3 * 4       → normál forma: _________
+(b) map (*2) [1,2]  → normál forma: _________
+(c) let x = x in x → normál forma: _________  (indok: __________________)
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 -->
+  <div class="exercise">
+    <div class="ex-header">
+      <div class="ex-num">03</div>
+      <div class="ex-title">Tail-rekurzió vs sima rekurzió — melyik melyik?</div>
+    </div>
+    <div class="ex-body">
+      <p class="ex-task">Jelöld meg: <strong>TAIL</strong> vagy <strong>NEM-TAIL</strong>? Ha nem tail, alakítsd át akkumulátorral!</p>
+      <div class="ans-code">
+<span class="cm">-- A:</span>
+szorzat []     = 1
+szorzat (x:xs) = x * szorzat xs
+<span class="cm">-- Tail? __________</span>
+
+<span class="cm">-- B:</span>
+szorzatT [] acc     = acc
+szorzatT (x:xs) acc = szorzatT xs (x * acc)
+<span class="cm">-- Tail? __________</span>
+
+<span class="cm">-- C: alakítsd át tail-recursive-vá!</span>
+osszeg []     = 0
+osszeg (x:xs) = x + osszeg xs
+<span class="cm">-- Tail-recursive verzió:</span>
+osszegT ______________ = ______________
+osszegT ______________ = ______________
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 -->
+  <div class="exercise">
+    <div class="ex-header">
+      <div class="ex-num">04</div>
+      <div class="ex-title">Curry Csaba és függvényösszetétel — töltsd ki!</div>
+    </div>
+    <div class="ex-body">
+      <p class="ex-task"><strong>a)</strong> Curry: mi lesz az eredmény?</p>
+      <div class="ans-code">
+add x y = x + y
+
+add3     = add 3            <span class="cm">-- típusa: ___________</span>
+add3 7                      <span class="cm">-- → ___________</span>
+map (add 10) [1,2,3]        <span class="cm">-- → ___________</span>
+      </div>
+      <p class="ex-task"><strong>b)</strong> Függvényösszetétel: mi lesz a definíció és az eredmény?</p>
+      <div class="ans-code">
+duplaPlusz1 = (+1) . (*2)
+
+duplaPlusz1 4  <span class="cm">-- lépések: 4 *2 = ___ , +1 = ___ → eredmény: ___</span>
+
+<span class="cm">-- Írj egy függvényt, ami: (1) megszorozza 3-mal, (2) kivon belőle 1-et, (3) négyzetre emeli</span>
+kombinalt = ________________________________
+kombinalt 5  <span class="cm">-- → ___________</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 -->
+  <div class="exercise">
+    <div class="ex-header">
+      <div class="ex-num">05</div>
+      <div class="ex-title">Lusta László vs Mohó Mónika — mikor melyik?</div>
+    </div>
+    <div class="ex-body">
+      <p class="ex-task">Minden esethez írd: <strong>LUSTA</strong> kezeli, <strong>MOHÓ</strong> lefagy/hibázik, vagy <strong>MINDKETTŐ</strong> kezeli?</p>
+      <table class="match-table">
+        <tr><th>Szituáció</th><th class="arr-col"></th><th>LUSTA / MOHÓ / MINDKETTŐ</th></tr>
+        <tr>
+          <td class="code-col"><code>take 5 [1..]</code> — végtelen lista első 5 eleme</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col"><code>sum [1..100]</code> — véges lista összege</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col">Fibonacci sorozat végtelen listája</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+        <tr>
+          <td class="code-col">Ha egy függvény argumentumát soha nem használjuk fel</td>
+          <td class="arr-col">→</td><td class="ans-col"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 06 -->
+  <div class="exercise">
+    <div class="ex-header">
+      <div class="ex-num">06</div>
+      <div class="ex-title">Saját Brainrot Karakter — Bonus fogalom</div>
+    </div>
+    <div class="ex-body">
+      <p class="ex-task">
+        Alkoss egy saját brainrot karaktert egy FP fogalomhoz, amit nem találtál meg!
+        (<em>pl. Monad Móric, Funktor Feri, Applicative Alíz, Típusosztály Teca, Typeclass Teca, IO Ibolya, Maybe Margit...</em>)
+        Add meg: <strong>Név, fogalom, személyiség, egy idézet, kódpélda.</strong>
+      </p>
+      <div class="ans-line"></div>
+      <div class="ans-line"></div>
+      <div class="ans-line"></div>
+      <div class="ans-line"></div>
+      <div class="ans-line"></div>
+      <div class="ans-line"></div>
+    </div>
+  </div>
+
+</div><!-- /worksheet -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    <div>FUNKCIONÁLIS PARADIGMA BRAINROT &nbsp;·&nbsp; Vol. 3 &nbsp;·&nbsp; Haskell stílusú kódpéldák</div>
+    <div style="margin-top:4px">// Kérdezd meg a GHC-t: ghci &gt; :type &lt;kifejezés&gt;</div>
+  </div>
+  <div class="score-box">
+    PONTSZÁM
+    <span>__ / 30</span>
+  </div>
+  <div style="text-align:right">
+    <div>20 karakter · 4 boss · 6 feladat</div>
+    <div style="margin-top:4px">λ Lali · Redukciós Réka · Normál Norbert<br>
+    Fanni · Rita · Tünde · László · Mónika<br>
+    Máté · Hanna · Hugó · Csaba · Miska<br>
+    Imre · Vazul · Tivadar&amp;Nóra · Tamás<br>
+    Gábor · Tímea · Frida</div>
+  </div>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>
